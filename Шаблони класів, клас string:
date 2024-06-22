@@ -1,0 +1,57 @@
+#include <iostream>
+#include <queue>
+#include <stdexcept>
+
+using namespace std;
+
+template<typename T>
+class Queue {
+private:
+    queue<T> elements;
+
+public:
+    void enqueue(const T& element) {
+        elements.push(element);
+    }
+
+    void dequeue() {
+        if (isEmpty()) {
+            throw out_of_range("Queue is empty. Cannot dequeue.");
+        }
+        elements.pop();
+    }
+
+    T front() const {
+        if (isEmpty()) {
+            throw out_of_range("Queue is empty. No front element.");
+        }
+        return elements.front();
+    }
+
+    bool isEmpty() const {
+        return elements.empty();
+    }
+};
+
+int main() {
+    Queue<int> queue;
+
+
+    queue.enqueue(10);
+    queue.enqueue(20);
+    queue.enqueue(30);
+
+
+    cout << "Front element: " << queue.front() << endl;
+
+   
+    queue.dequeue();
+
+
+    cout << "Front element after dequeue: " << queue.front() << endl;
+
+  
+    cout << "Is queue empty? " << (queue.isEmpty() ? "Yes" : "No") << endl;
+
+    return 0;
+}
