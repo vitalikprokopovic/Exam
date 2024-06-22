@@ -1,0 +1,71 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std; 
+
+namespace Utilities {
+  
+    bool fileExists(const string& filename) {
+        ifstream file(filename);
+        return file.good();
+    }
+
+   
+    string readFile(const string& filename) {
+        ifstream file(filename);
+        if (!file.is_open()) {
+            throw runtime_error("Cannot open file: " + filename);
+        }
+
+        string content;
+        string line;
+        while (getline(file, line)) {
+            content += line + "\n";
+        }
+
+        file.close();
+        return content;
+    }
+
+   
+    void writeFile(const string& filename, const string& content) {
+        ofstream file(filename);
+        if (!file.is_open()) {
+            throw runtime_error("Cannot open file for writing: " + filename);
+        }
+
+        file << content;
+        file.close();
+    }
+}
+
+int main() {
+    string filename = "example.txt";
+
+  
+    if (!Utilities::fileExists(filename)) {
+        cout << "File does not exist: " << filename << endl;
+        return 1;
+    }
+
+    try {
+       
+        string fileContent = Utilities::readFile(filename);
+        cout << "File content:" << endl;
+        cout << fileContent << endl;
+
+        
+        string additionalContent = "\nAdditional text added.";
+        fileContent += additionalContent;
+
+     
+        Utilities::writeFile(filename, fileContent);
+        cout << "Modified content successfully written back to file." << endl;
+    } catch (const exception& ex) {
+        cerr << "Exception occurred: " << ex.what() << endl;
+        return 1;
+    }
+
+    return 0;
+}
