@@ -1,0 +1,35 @@
+#include <iostream>
+#include <fstream>
+#include <stdexcept>
+
+using namespace std;
+
+int readNumberFromFile(const string& filename) {
+    ifstream file(filename);
+
+    if (!file.is_open()) {
+        throw runtime_error("Cannot open file: " + filename);
+    }
+
+    int number;
+    if (!(file >> number)) {
+        throw runtime_error("Invalid number format in file: " + filename);
+    }
+
+    return number;
+}
+
+int main() {
+    string filename;
+    cout << "Enter the filename: ";
+    cin >> filename;
+
+    try {
+        int number = readNumberFromFile(filename);
+        cout << "Number read from file: " << number << endl;
+    } catch (const exception& ex) {
+        cout << "Exception occurred: " << ex.what() << endl;
+    }
+
+    return 0;
+}
