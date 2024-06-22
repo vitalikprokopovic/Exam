@@ -1,0 +1,45 @@
+#include <iostream>
+
+using namespace std;
+
+class Date {
+private:
+    int day;
+    int month;
+    int year;
+
+public:
+   
+    explicit Date(int day, int month, int year) : day(day), month(month), year(year) {}
+
+     int getDay() const {
+        return day;
+    }
+
+    int getMonth() const {
+        return month;
+    }
+
+    int getYear() const {
+        return year;
+    }
+
+
+    void printDate() const {
+        cout << day << "/" << month << "/" << year << endl;
+    }
+};
+
+int main() {
+    
+    Date myBirthday(25, 12, 1990);
+
+    
+    cout << "Day: " << myBirthday.getDay() << endl;
+    cout << "Month: " << myBirthday.getMonth() << endl;
+    cout << "Year: " << myBirthday.getYear() << endl;
+
+   myBirthday.printDate();
+
+    return 0;
+}
