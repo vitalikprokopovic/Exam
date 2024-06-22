@@ -1,0 +1,96 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+
+class Vehicle {
+protected:
+    string brand;
+
+public:
+    Vehicle(const string& brand) : brand(brand) {}
+
+    virtual void displayInfo() const {
+        cout << "Brand: " << brand << endl;
+    }
+
+    virtual ~Vehicle() {}
+};
+
+
+class Car : public Vehicle {
+private:
+    int seats; 
+
+public:
+    Car(const string& brand, int seats) : Vehicle(brand), seats(seats) {}
+
+    void displayInfo() const override {
+        cout << "Car - ";
+        Vehicle::displayInfo();
+        cout << "Seats: " << seats << endl;
+    }
+};
+
+
+class Truck : public Vehicle {
+private:
+    double capacity; 
+
+public:
+    Truck(const string& brand, double capacity) : Vehicle(brand), capacity(capacity) {}
+
+    void displayInfo() const override {
+        cout << "Truck - ";
+        Vehicle::displayInfo();
+        cout << "Capacity: " << capacity << " tons" << endl;
+    }
+};
+
+
+class VehiclePark {
+private:
+    vector<Vehicle*> vehicles; 
+
+public:
+    ~VehiclePark() {
+        
+        for (auto vehicle : vehicles) {
+            delete vehicle;
+        }
+        vehicles.clear();
+    }
+
+    
+    void addVehicle(Vehicle* vehicle) {
+        vehicles.push_back(vehicle);
+    }
+
+ 
+    void displayAllVehiclesInfo() const {
+        for (const auto& vehicle : vehicles) {
+            vehicle->displayInfo();
+            cout << endl;
+        }
+    }
+};
+
+int main() {
+    
+    Car car1("Toyota", 5);
+    Truck truck1("Volvo", 10.5);
+    Car car2("Honda", 4);
+
+  
+    VehiclePark park;
+    park.addVehicle(&car1);
+    park.addVehicle(&truck1);
+    park.addVehicle(&car2);
+
+   
+    park.displayAllVehiclesInfo();
+
+    return 0;
+}
