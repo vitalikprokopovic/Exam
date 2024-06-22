@@ -1,0 +1,81 @@
+#include <iostream>
+
+using namespace std;
+
+class Vector {
+private:
+    double x, y, z;
+
+public:
+
+    Vector() : x(0), y(0), z(0) {}
+
+
+    Vector(double x, double y, double z) : x(x), y(y), z(z) {}
+
+
+    Vector operator+(const Vector& other) const {
+        return Vector(x + other.x, y + other.y, z + other.z);
+    }
+
+   
+    Vector operator-(const Vector& other) const {
+        return Vector(x - other.x, y - other.y, z - other.z);
+    }
+
+    
+    double operator*(const Vector& other) const {
+        return x * other.x + y * other.y + z * other.z;
+    }
+
+    
+    bool operator==(const Vector& other) const {
+        return x == other.x && y == other.y && z == other.z;
+    }
+
+    
+    bool operator!=(const Vector& other) const {
+        return !(*this == other);
+    }
+
+    
+    void print() const {
+        cout << "(" << x << ", " << y << ", " << z << ")" << endl;
+    }
+};
+
+int main() {
+   
+    Vector A(1, 2, 3);
+    Vector B(2, 3, 4);
+
+   
+    Vector C = A + B;
+    cout << "A + B = ";
+    C.print(); 
+
+
+    Vector D = A - B;
+    cout << "A - B = ";
+    D.print(); 
+
+
+    double dotProduct = A * B;
+    cout << "A * B = " << dotProduct << endl;
+
+
+    if (A == B) {
+        cout << "A is equal to B" << endl;
+    } else {
+        cout << "A is not equal to B" << endl;
+    }
+
+    Vector E(1, 2, 3);
+    if (A == E) {
+        cout << "A is equal to E" << endl;
+    } else {
+        cout << "A is not equal to E" << endl;
+    }
+
+    return 0;
+}
