@@ -1,0 +1,41 @@
+#include <iostream>
+#include <stdexcept>
+
+using namespace std;
+
+
+class Base {
+public:
+    virtual ~Base() {}
+};
+
+
+class Derived : public Base {
+public:
+    void derivedMethod() {
+        cout << "Called derived method." << endl;
+    }
+};
+
+
+void tryDerivedCast(Base* ptr) {
+    Derived* derivedPtr = dynamic_cast<Derived*>(ptr);
+    if (derivedPtr) {
+        derivedPtr->derivedMethod();
+    } else {
+        throw runtime_error("Failed to cast to Derived.");
+    }
+}
+
+int main() {
+    try {
+        Base* basePtr = new Derived();
+        tryDerivedCast(basePtr);
+
+        delete basePtr;
+    } catch (const exception& ex) {
+        cerr << "Exception occurred: " << ex.what() << endl;
+    }
+
+    return 0;
+}
